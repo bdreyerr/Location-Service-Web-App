@@ -5,4 +5,5 @@ Made during my time as an intern at Convercent.
 
 Connect with me: 
 bdreyer@scu.edu
-instagram.com/bdreyerr
+
+www.instagram.com/bdreyerr
