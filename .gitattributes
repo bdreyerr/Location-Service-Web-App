@@ -61,3 +61,12 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+
+###############################################################################
+# behavior for how github reads the language attribution
+# 
+# This makes C# the primary repo language rather than JavaScript seeing as
+# ASP.NET generates the JS code while I wrote mainly in C#
+# 
+###############################################################################
