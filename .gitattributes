@@ -70,4 +70,4 @@
 # ASP.NET generates the JS code while I wrote mainly in C#
 # 
 ###############################################################################
-Scripts/* linguist-vendored
+REALWEBAPP/Scripts/* linguist-vendored
