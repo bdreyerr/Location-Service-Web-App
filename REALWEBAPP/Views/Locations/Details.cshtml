@@ -1,0 +1,55 @@
+﻿@model REALWEBAPP.Models.Location
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Location</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Location")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>Street Number</th>
+                    <th>Street Name</th>
+                    <th>City</th>
+                    <th>State</th>
+                </tr>
+                @foreach (var item in Model.Addresses)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.City)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelITem => item.State)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

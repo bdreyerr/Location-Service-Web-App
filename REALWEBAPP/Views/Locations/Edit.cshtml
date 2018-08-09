@@ -1,0 +1,82 @@
+﻿@model REALWEBAPP.Models.Location
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Location</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <dd>
+        <table class="table">
+            <tr>
+                <th>Street Number</th>
+                <th>Street Name</th>
+                <th>City</th>
+                <th>State</th>
+
+            </tr>
+            @foreach (var item in Model.Addresses)
+            {
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelITem => item.State)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Delete Address", "RemoveAddress", new { id = Model.Id, addressId = item.Id }, new { @class = "btn btn-success" }) 
+                    </td>
+
+                </tr>
+            }
+        </table>
+    </dd>
+    @Html.ActionLink("Add an Address", "AddAddress", new { id = Model.Id }, new { @class = "btn btn-success" })
+    
+
+</div>
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

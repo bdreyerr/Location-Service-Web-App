@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3ba0bb45118f4d40b11e78df13719856" Name="Diagram1">
+        <EntityTypeShape EntityType="LocationServiceModel.Person" Width="1.5" PointX="4.5" PointY="2.375" />
+        <EntityTypeShape EntityType="LocationServiceModel.Location" Width="1.5" PointX="7" PointY="2.5" />
+        <EntityTypeShape EntityType="LocationServiceModel.Address" Width="1.5" PointX="9.875" PointY="2.375" />
+        <AssociationConnector Association="LocationServiceModel.LocationPerson" />
+        <AssociationConnector Association="LocationServiceModel.LocationAddress" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

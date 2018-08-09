@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LocationServiceModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="LocationServiceModelStoreContainer">
+    <EntitySet Name="People" EntityType="LocationServiceModel.Store.People" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Locations" EntityType="LocationServiceModel.Store.Locations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Addresses" EntityType="LocationServiceModel.Store.Addresses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LocationAddress" EntityType="LocationServiceModel.Store.LocationAddress" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="LocationPerson" Association="LocationServiceModel.Store.LocationPerson">
+      <End Role="Location" EntitySet="Locations" />
+      <End Role="Person" EntitySet="People" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LocationAddress_Location" Association="LocationServiceModel.Store.FK_LocationAddress_Location">
+      <End Role="Location" EntitySet="Locations" />
+      <End Role="LocationAddress" EntitySet="LocationAddress" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LocationAddress_Address" Association="LocationServiceModel.Store.FK_LocationAddress_Address">
+      <End Role="Address" EntitySet="Addresses" />
+      <End Role="LocationAddress" EntitySet="LocationAddress" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="People">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LocationId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Locations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Addresses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StNumber" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="City" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="State" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LocationAddress">
+    <Key>
+      <PropertyRef Name="Locations_Id" />
+      <PropertyRef Name="Addresses_Id" />
+    </Key>
+    <Property Name="Locations_Id" Type="int" Nullable="false" />
+    <Property Name="Addresses_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="LocationPerson">
+    <End Role="Location" Type="LocationServiceModel.Store.Locations" Multiplicity="1" />
+    <End Role="Person" Type="LocationServiceModel.Store.People" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Person">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LocationAddress_Location">
+    <End Role="Location" Type="LocationServiceModel.Store.Locations" Multiplicity="1" />
+    <End Role="LocationAddress" Type="LocationServiceModel.Store.LocationAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LocationAddress">
+        <PropertyRef Name="Locations_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LocationAddress_Address">
+    <End Role="LocationAddress" Type="LocationServiceModel.Store.LocationAddress" Multiplicity="*" />
+    <End Role="Address" Type="LocationServiceModel.Store.Addresses" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LocationAddress">
+        <PropertyRef Name="Addresses_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LocationServiceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="LocationServiceContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="People" EntityType="LocationServiceModel.Person" />
+          <EntitySet Name="Locations" EntityType="LocationServiceModel.Location" />
+          <EntitySet Name="Addresses" EntityType="LocationServiceModel.Address" />
+          <AssociationSet Name="LocationPerson" Association="LocationServiceModel.LocationPerson">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="LocationAddress" Association="LocationServiceModel.LocationAddress">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" />
+          <Property Name="LastName" Type="String" Nullable="false" />
+          <NavigationProperty Name="Location" Relationship="LocationServiceModel.LocationPerson" FromRole="Person" ToRole="Location" />
+          <Property Name="LocationId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Addresses" Relationship="LocationServiceModel.LocationAddress" FromRole="Location" ToRole="Address" />
+        </EntityType>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StNumber" Type="String" Nullable="false" />
+          <Property Name="StName" Type="String" Nullable="false" />
+          <Property Name="City" Type="String" Nullable="false" />
+          <Property Name="State" Type="String" Nullable="false" />
+          <NavigationProperty Name="Locations" Relationship="LocationServiceModel.LocationAddress" FromRole="Address" ToRole="Location" />
+        </EntityType>
+        <Association Name="LocationPerson">
+          <End Type="LocationServiceModel.Location" Role="Location" Multiplicity="1" />
+          <End Type="LocationServiceModel.Person" Role="Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Person">
+              <PropertyRef Name="LocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LocationAddress">
+          <End Type="LocationServiceModel.Location" Role="Location" Multiplicity="*" />
+          <End Type="LocationServiceModel.Address" Role="Address" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="LocationServiceModelStoreContainer" CdmEntityContainer="LocationServiceContainer">
+    <EntitySetMapping Name="People">
+      <EntityTypeMapping TypeName="IsTypeOf(LocationServiceModel.Person)">
+        <MappingFragment StoreEntitySet="People">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Locations">
+      <EntityTypeMapping TypeName="IsTypeOf(LocationServiceModel.Location)">
+        <MappingFragment StoreEntitySet="Locations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Addresses">
+      <EntityTypeMapping TypeName="IsTypeOf(LocationServiceModel.Address)">
+        <MappingFragment StoreEntitySet="Addresses">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StNumber" ColumnName="StNumber" />
+          <ScalarProperty Name="StName" ColumnName="StName" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="LocationAddress" TypeName="LocationServiceModel.LocationAddress" StoreEntitySet="LocationAddress">
+      <EndProperty Name="Location">
+        <ScalarProperty Name="Id" ColumnName="Locations_Id" />
+      </EndProperty>
+      <EndProperty Name="Address">
+        <ScalarProperty Name="Id" ColumnName="Addresses_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
